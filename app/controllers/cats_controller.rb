@@ -9,14 +9,22 @@ class CatsController < ApplicationController
   # POST /create
   def create
     cat = Cat.create(cat_params)
+   if cat.valid?
     render json: cat
+   else
+    render json: cat.errors, status: 422
+   end
   end
 
   # PATCH /update
   def update
     cat = Cat.find(params[:id])
     cat.update(cat_params)
-    render json: cat
+    if cat.valid?
+     render json: cat
+    else
+     render json: cat.errors, status: 422
+    end
   end
 
   # DELETE /destroy
